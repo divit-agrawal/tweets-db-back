@@ -8,6 +8,7 @@ const tweetSchema = mongoose.Schema({
   tweet_id: { type: String, required: true },
   image_url: {
     type: String,
+    required: false,
   },
   created_at: {
     type: String,

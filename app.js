@@ -27,10 +27,18 @@ app.use(
   })
 );
 
+const deleteTweet = require("./routes/deleteTweet");
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use("/getAllTweets", getAllTweets);
 app.use("/addTweet", addTweet);
+app.use("/deleteTweets", deleteTweet);
 
 //Routes:
 app.get("/", (req, res) => {

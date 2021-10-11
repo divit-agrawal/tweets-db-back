@@ -30,18 +30,20 @@ router.post("/", async (req, res) => {
     .catch(function (error) {
       console.log(error);
     });
-  // console.log(Data.data)
-  // console.log(Data.data.text.toString().match(/#[a-z]+/gi));
+  var img_url;
+  if (!Data.includes.media) {
+    img_url = null;
+  } else img_url = Data.includes.media[0].url;
   const tweet = new Tweet({
     profile_image_url: Data.includes.users[0].profile_image_url,
     name: Data.includes.users[0].name,
     user_name: Data.includes.users[0].username,
     text: Data.data.text,
     tweet_id: Data.data.id,
-    image_url: Data.includes.media[0].url,
+    image_url: img_url,
     created_at: Data.data.created_at,
     tags: Data.data.text.toString().match(/#[a-z]+/gi),
-    categories: req.body.categories ,
+    categories: req.body.categories,
     is_featured: req.body.is_featured,
   });
   await tweet
