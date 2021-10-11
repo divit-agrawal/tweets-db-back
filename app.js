@@ -20,9 +20,17 @@ app.use(
   })
 );
 
+const addTweet = require("./routes/addTweet");
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use("/getAllTweets", getAllTweets);
+app.use("/addTweet", addTweet);
 
 //Routes:
 app.get("/", (req, res) => {
