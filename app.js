@@ -10,6 +10,8 @@ const bodyParser = require("body-parser");
 
 const cors = require("cors");
 
+const verifyToken = require("./middlewares/verifyToken");
+
 require("dotenv/config");
 
 //Import Routes:
@@ -34,11 +36,26 @@ app.use(
   })
 );
 
+const register = require("./routes/register");
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+const login = require("./routes/login");
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+
 app.use(cors());
 app.use(bodyParser.json());
-app.use("/getAllTweets", getAllTweets);
-app.use("/addTweet", addTweet);
-app.use("/deleteTweets", deleteTweet);
+app.use("/getAllTweets", verifyToken, getAllTweets);
+app.use("/addTweet", verifyToken, addTweet);
+app.use("/deleteTweets", verifyToken, deleteTweet);
+app.use("/register", register);
+app.use("/login", login);
 
 //Routes:
 app.get("/", (req, res) => {

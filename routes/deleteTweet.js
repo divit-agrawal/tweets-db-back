@@ -4,7 +4,7 @@ const router = express.Router();
 
 const Tweet = require("../models/tweet");
 
-router.post("/", (req, res) => {
+router.post("/", async (req, res) => {
   const tweet_url = req.body.data;
   const extracted_tweet_id = tweet_url
     .toString()
