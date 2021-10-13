@@ -35,6 +35,12 @@ app.use(
     extended: true,
   })
 );
+const updateTweet = require("./routes/updateTweet");
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 
 const register = require("./routes/register");
 app.use(
@@ -54,6 +60,7 @@ app.use(bodyParser.json());
 app.use("/getAllTweets", verifyToken, getAllTweets);
 app.use("/addTweet", verifyToken, addTweet);
 app.use("/deleteTweets", verifyToken, deleteTweet);
+app.use("/updateTweet", verifyToken, updateTweet);
 app.use("/register", register);
 app.use("/login", login);
 

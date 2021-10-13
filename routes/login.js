@@ -25,7 +25,6 @@ router.post("/", async (req, res) => {
         { user_id: user._id, email },
         process.env.TOKEN_KEY
       );
-      console.log(process.env.TOKEN_KEY);
       // save user token
       user.token = token;
       // user
