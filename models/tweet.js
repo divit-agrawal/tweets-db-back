@@ -14,15 +14,17 @@ const tweetSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  tags: {
-    type: Array,
-    default: [],
-  },
-  categories: {
-    type: Array,
-    default: [],
-    required: true,
-  },
+  tags: [
+    {
+      type: String,
+    },
+  ],
+  categories: [
+    {
+      type: String,
+      required: true,
+    },
+  ],
   is_featured: {
     type: Boolean,
     required: true,

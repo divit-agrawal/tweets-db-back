@@ -30,10 +30,16 @@ router.post("/", async (req, res) => {
     .catch(function (error) {
       console.log(error);
     });
+  //checking if image url is there or not
   var img_url;
   if (!Data.includes.media) {
     img_url = null;
   } else img_url = Data.includes.media[0].url;
+  //converting all catergories to lowercase for better finding
+  req.body.categories.map((cat) => {
+    cat = cat.toString().toLowerCase();
+    console.log(cat);
+  });
   const tweet = new Tweet({
     profile_image_url: Data.includes.users[0].profile_image_url,
     name: Data.includes.users[0].name,
