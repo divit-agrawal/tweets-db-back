@@ -11,8 +11,8 @@ router.post("/", async (req, res) => {
       const startIndex = 0;
       const endIndex = page * limit;
       const result = data.slice(startIndex, endIndex);
-      console.log(req.body.category);
-      res.json(data);
+      // console.log(req.body.category);
+      res.json(result);
     })
     .catch((err) => {
       res.json({ message: err });
