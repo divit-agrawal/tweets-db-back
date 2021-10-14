@@ -14,7 +14,7 @@ router.post("/", async (req, res) => {
     { categories: req.body.categories, is_featured: req.body.is_featured }
   )
     .then((data) => {
-      res.json(data);
+      res.json({ message: "Tweet updated!" });
     })
     .catch((err) => {
       res.json({ message: err });
