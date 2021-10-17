@@ -71,7 +71,7 @@ app.use(
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use("/getAllTweets", verifyToken, getAllTweets);
+app.use("/getAllTweets", getAllTweets);
 app.use("/addTweet", verifyToken, addTweet);
 app.use("/deleteTweets", verifyToken, deleteTweet);
 app.use("/updateTweet", verifyToken, updateTweet);
