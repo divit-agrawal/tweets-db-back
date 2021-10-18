@@ -49,14 +49,21 @@ app.use(
   })
 );
 
+
+
+const searchTag = require("./routes/searchTag");
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
 const searchSingleTweet = require("./routes/searchSingleTweet");
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
 );
-
-const searchTag = require("./routes/searchTag");
+const getTopHashTags = require("./routes/getTopHashTags");
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -85,6 +92,7 @@ app.use("/updateTweet", verifyToken, updateTweet);
 app.use("/searchCategory", searchCategory);
 app.use("/searchTag", searchTag);
 app.use("/searchSingleTweet", searchSingleTweet);
+app.use("/getTopHashTags", getTopHashTags);
 app.use("/register", register);
 app.use("/login", login);
 
