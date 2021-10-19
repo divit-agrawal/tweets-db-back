@@ -62,7 +62,7 @@ router.post("/", async (req, res) => {
       { name: hash[i] },
       { $inc: { count: 1 } }
     ).then(async (data) => {
-      console.log(data);
+      // console.log(data);
       if (data == null) {
         await HashTag.create({
           name: hash[i],

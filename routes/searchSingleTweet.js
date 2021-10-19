@@ -10,7 +10,6 @@ router.post("/", async (req, res) => {
     .substring(tweet_url.length - 19, tweet_url.length);
   await Tweet.findOne({ tweet_id: extracted_tweet_id })
     .then((data) => {
-      console.log(data);
       res.json(data);
     })
     .catch((err) => {
