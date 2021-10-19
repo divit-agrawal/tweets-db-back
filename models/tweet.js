@@ -21,14 +21,10 @@ const tweetSchema = mongoose.Schema({
   ],
   categories: [
     {
-      type: String,
-      required: true,
+      name: { type: String, default: null },
+      order: { type: Number, default: 0 },
     },
   ],
-  is_featured: {
-    type: Boolean,
-    required: true,
-  },
 });
 
 module.exports = mongoose.model("Tweet", tweetSchema);

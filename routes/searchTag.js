@@ -4,6 +4,9 @@ const Tweet = require("../models/tweet");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
+  if (!req.body.tag) {
+    return res.status(400).send({ message: "Missing required parameters" });
+  }
   await Tweet.find({ tags: { $all: req.body.tag.toString() } })
     .then((data) => {
       const page = 1;

@@ -9,6 +9,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 router.post("/", async (req, res) => {
+  if (!req.body.email || !req.body.password) {
+    return res.status(400).send({ message: "Missing required parameters" });
+  }
   try {
     // Get user input
     const { first_name, last_name, email, password } = req.body;

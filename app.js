@@ -49,8 +49,6 @@ app.use(
   })
 );
 
-
-
 const searchTag = require("./routes/searchTag");
 app.use(
   bodyParser.urlencoded({
@@ -64,6 +62,18 @@ app.use(
   })
 );
 const getTopHashTags = require("./routes/getTopHashTags");
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+const addCategory = require("./routes/addCategory");
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
+);
+const getCategories = require("./routes/getCategories");
 app.use(
   bodyParser.urlencoded({
     extended: true,
@@ -88,11 +98,13 @@ app.use(bodyParser.json());
 app.use("/getAllTweets", getAllTweets);
 app.use("/addTweet", verifyToken, addTweet);
 app.use("/deleteTweets", verifyToken, deleteTweet);
-app.use("/updateTweet", verifyToken, updateTweet);
+app.use("/updateTweet", verifyToken, updateTweet); // incomplete
 app.use("/searchCategory", searchCategory);
 app.use("/searchTag", searchTag);
 app.use("/searchSingleTweet", searchSingleTweet);
 app.use("/getTopHashTags", getTopHashTags);
+app.use("/addCategory", addCategory);
+app.use("/getCategories", getCategories);
 app.use("/register", register);
 app.use("/login", login);
 

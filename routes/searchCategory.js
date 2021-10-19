@@ -1,22 +1,22 @@
 const express = require("express");
 const Tweet = require("../models/tweet");
+const Categories = require("../models/categories");
 
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  await Tweet.find({ categories: { $all: req.body.category } })
-    .then((data) => {
-      const page = 1;
-      const limit = req.query.limit;
-      const startIndex = 0;
-      const endIndex = page * limit;
-      const result = data.slice(startIndex, endIndex);
-      // console.log(req.body.category);
-      res.json(result);
-    })
-    .catch((err) => {
-      res.json({ message: err });
-    });
+  if (!req.body.categories) {
+    return res.status(400).send({ message: "Missing required parameters" });
+  }
+  await Categories.find({ name: req.body.category }).then(async (data) => {
+    var arr = await Promise.all(
+      data[0].tweets.map(async (ele) => {
+        let a = await Tweet.find({ tweet_id: ele.tweet_id });
+        return { ...a, order: ele.order };
+      })
+    );
+    res.json(arr);
+  });
 });
 
 module.exports = router;

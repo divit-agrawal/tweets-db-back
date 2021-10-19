@@ -8,8 +8,12 @@ const Tweet = require("../models/tweet");
 
 const HashTag = require("../models/hashtags");
 
+const Category = require("../models/categories");
+
 //post one tweet in db
 router.post("/", async (req, res) => {
+  if (!req.body.data || !req.body.categories)
+    return res.status(400).send({ message: "Missing required parameters" });
   const tweet_url = req.body.data;
   const extracted_tweet_id = tweet_url
     .toString()
@@ -40,9 +44,28 @@ router.post("/", async (req, res) => {
     img_url = null;
   } else img_url = Data.includes.media[0].url;
   //converting all catergories to lowercase for better finding
-  req.body.categories.map((cat) => {
-    cat = cat.toString().toLowerCase();
+  var x = req.body.categories;
+
+  x.map((cat) => {
+    cat.name = cat.name.toString().toLowerCase();
     console.log(cat);
+  });
+
+  x.forEach(async (ele) => {
+    await Category.findOneAndUpdate(
+      { name: ele.name.toString().toLowerCase() },
+      {
+        $push: { tweets: { tweet_id: extracted_tweet_id, order: ele.order } },
+      }
+    ).then(async (data) => {
+      // console.log(data);
+      if (data == null) {
+        await Category.create({
+          name: ele.name.toString().toLowerCase(),
+          tweets: [{ tweet_id: extracted_tweet_id, order: ele.order }],
+        });
+      }
+    });
   });
   let hash = Data.data.text.toString().match(/#[a-z]+/gi);
   const tweet = new Tweet({
@@ -55,20 +78,21 @@ router.post("/", async (req, res) => {
     created_at: Data.data.created_at,
     tags: hash,
     categories: req.body.categories,
-    is_featured: req.body.is_featured,
   });
-  for (let i = 0; i < hash.length; i++) {
-    await HashTag.findOneAndUpdate(
-      { name: hash[i] },
-      { $inc: { count: 1 } }
-    ).then(async (data) => {
-      // console.log(data);
-      if (data == null) {
-        await HashTag.create({
-          name: hash[i],
-        });
-      }
-    });
+  if (hash && hash.length > 0) {
+    for (let i = 0; i < hash.length; i++) {
+      await HashTag.findOneAndUpdate(
+        { name: hash[i] },
+        { $inc: { count: 1 } }
+      ).then(async (data) => {
+        // console.log(data);
+        if (data == null) {
+          await HashTag.create({
+            name: hash[i],
+          });
+        }
+      });
+    }
   }
   await tweet
     .save()
