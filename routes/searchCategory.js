@@ -5,7 +5,7 @@ const Categories = require("../models/categories");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
-  if (!req.body.categories) {
+  if (!req.body.category) {
     return res.status(400).send({ message: "Missing required parameters" });
   }
   await Categories.find({ name: req.body.category }).then(async (data) => {
