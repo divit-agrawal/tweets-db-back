@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
     var arr = await Promise.all(
       data[0].tweets.map(async (ele) => {
         let a = await Tweet.find({ tweet_id: ele.tweet_id });
-        return { ...a, order: ele.order };
+        return { ...a["0"]["_doc"], order: ele.order };
       })
     );
     res.json(arr);
