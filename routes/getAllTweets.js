@@ -1,4 +1,3 @@
-const { Router } = require("express");
 const express = require("express");
 const Tweet = require("../models/tweet");
 
@@ -8,10 +7,10 @@ const router = express.Router();
 router.get("/", (req, res) => {
   Tweet.find()
     .then((data) => {
-      res.json(result);
+      res.json(data);
     })
     .catch((err) => {
-      res.json({ message: err });
+      res.status(400).json({ message: err });
     });
 });
 
